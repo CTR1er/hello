@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello</title>
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0d1117;
+            --fg: #c9d1d9;
+            --accent: #58a6ff;
+            --muted: #8b949e;
+            --border: #30363d;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            background-image: radial-gradient(ellipse at top, #161b22 0%, var(--bg) 70%);
+            color: var(--fg);
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 640px;
+            width: 100%;
+        }
+
+        /* Terminal Visual */
+        .terminal {
+            background: #161b22;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2.5rem;
+            font-size: 0.95rem;
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot:nth-child(1) { background: #ff5f56; }
+        .terminal-dot:nth-child(2) { background: #ffbd2e; }
+        .terminal-dot:nth-child(3) { background: #27c93f; }
+
+        .terminal-body {
+            color: var(--fg);
+        }
+
+        .terminal-prompt {
+            color: var(--accent);
+        }
+
+        .terminal-output {
+            color: var(--muted);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.1em;
+            background: var(--fg);
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--fg);
+            margin-bottom: 0.25rem;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        .handle {
+            font-size: 0.85rem;
+            color: var(--muted);
+            opacity: 0.5;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .headline {
+            font-size: 1.1rem;
+            color: #8b949e;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            border-right: 2px solid #8b949e;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3s steps(40, end) infinite alternate,
+                       blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            0% { width: 0; }
+            70%, 100% { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #8b949e; }
+        }
+
+        h2 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .skills-group {
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--border);
+        }
+
+        .skills-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .skills-label {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .skills-list {
+            color: var(--fg);
+            font-size: 0.95rem;
+        }
+
+        .experience-item {
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--border);
+        }
+
+        .experience-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.25rem;
+        }
+
+        .experience-role {
+            color: var(--fg);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .experience-date {
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .experience-company {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .experience-desc {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.15s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .terminal {
+                font-size: 0.85rem;
+                padding: 1rem;
+            }
+
+            .experience-header {
+                flex-direction: column;
+                gap: 0.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Terminal Visual -->
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+            </div>
+            <div class="terminal-body">
+                <div><span class="terminal-prompt">./hello</span></div>
+                <div class="terminal-output">Hello there!, this is just a POC Task, spent most of time researching and building my workflow :)<span class="cursor"></span></div>
+            </div>
+        </div>
+
+        <!-- Name -->
+        <section>
+            <h1>Muhammad elKhateib</h1>
+            <p class="handle">CTR1er</p>
+        </section>
+
+        <!-- Headline -->
+        <section>
+            <p class="headline">The Guy who Builds Systems and Breaks Them</p>
+        </section>
+
+        <!-- Skills -->
+        <section>
+            <h2>Skills</h2>
+            <div class="skills-group">
+                <div class="skills-label">Languages</div>
+                <div class="skills-list">Go, Python, Bash, C/C++, C#, Java, HTML/JS, SQL</div>
+            </div>
+            <div class="skills-group">
+                <div class="skills-label">Tools</div>
+                <div class="skills-list">Burp Suite, Nmap, Wireshark, NetCat</div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section>
+            <h2>Experience</h2>
+            <div class="experience-item">
+                <div class="experience-header">
+                    <span class="experience-role">Penetration Tester</span>
+                    <span class="experience-date">Aug 2026 – Present</span>
+                </div>
+                <div class="experience-company">Duckurity</div>
+                <div class="experience-desc">Conduct vulnerability assessments, draft technical reports, collaborate with senior team members.</div>
+            </div>
+            <div class="experience-item">
+                <div class="experience-header">
+                    <span class="experience-role">Software Engineer</span>
+                    <span class="experience-date">Nov 2023 – Feb 2024</span>
+                </div>
+                <div class="experience-company">Code Rifters</div>
+                <div class="experience-desc">Built applications with focus on clean architecture, low-level C development, network analysis.</div>
+            </div>
+        </section>
+
+        <!-- Social Links -->
+        <section>
+            <h2>Links</h2>
+            <div class="social-links">
+                <a href="https://github.com/muhammad-elkhateib" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://x.com/muhammad_elkhateib" target="_blank" rel="noopener">X</a>
+                <a href="https://linkedin.com/in/muhammad-elkhateib" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
